@@ -16,6 +16,7 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+	
 };
 
 // Draw the enemy on the screen, required method for game
@@ -41,11 +42,23 @@ Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 };
 
-//Handles key strokes (Up, Down, Right, Left)
+//Handles player's key strokes (Up, Down, Right, Left)
 Player.prototype.handleInput = function (keypress) {
 	const stepX = 102;
 	const stepY = 83;
-	
+	const maxX = 404;
+	const maxY = 404;
+	if (keypress === 'up' && this.y > 0) {this.y -= stepY;}
+	if (keypress === 'down' && this.y < maxY) {this.y += stepY;}
+	if (keypress === 'right' && this.x < maxX) {this.x += stepX;}
+	if (keypress === 'left' && this.x > 0) {this.x -= stepX;}
+	if (this.y < 0) {
+		setTimeout(
+			function() {
+				player.x = 200;
+				player.y = 404;
+			}, 1000);
+	}
 };
 
 
@@ -53,14 +66,15 @@ Player.prototype.handleInput = function (keypress) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
+let allEnemies = [];
+const enemyInit = [65, 145, 225];
 
-var enemy1 = new Enemy(0,65);
-var enemy2 = new Enemy(0,145);
-var enemy3 = new Enemy(0,225);
+enemyInit.forEach(function(location) {
+	enemy = new Enemy(0, location);
+	allEnemies.push(enemy);
+});
 
-var allEnemies = [enemy1, enemy2, enemy3];
-
-var player = new Player(200, 405);
+let player = new Player(200, 404);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
