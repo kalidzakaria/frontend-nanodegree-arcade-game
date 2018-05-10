@@ -1,5 +1,5 @@
 // Enemies our player must avoid
-const Enemy = function(x, y) {
+const Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
 
@@ -8,6 +8,7 @@ const Enemy = function(x, y) {
     this.sprite = 'images/enemy-bug.png';
 	this.x = x;
 	this.y = y;
+	this.speed = speed;
 };
 
 // Update the enemy's position, required method for game
@@ -16,7 +17,17 @@ Enemy.prototype.update = function(dt) {
     // You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+	this.x += this.speed * dt;
 	
+	if (this.x > 505) {
+		this.x = -95;
+		this.speed = Math.floor(Math.random() * 100 ) + 350;
+	}
+	
+	if ((player.y == this.y) && (player.x-51 < this.x) && (player.x+51 > this.x ))  {
+		player.x = 200;
+		player.y = 404;
+	}
 };
 
 // Draw the enemy on the screen, required method for game
@@ -28,7 +39,7 @@ Enemy.prototype.render = function() {
 // This class requires an update(), render() and
 // a handleInput() method.
 const Player = function (x,y) {
-	this.sprite = 'images/char-boy.png';
+	this.character = 'images/char-boy.png';
 	this.x = x;
 	this.y = y;
 };
@@ -39,7 +50,7 @@ Player.prototype.update = function (dt) {
 
 //Render the Player Character
 Player.prototype.render = function() {
-	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+	ctx.drawImage(Resources.get(this.character), this.x, this.y);
 };
 
 //Handles player's key strokes (Up, Down, Right, Left)
@@ -50,7 +61,7 @@ Player.prototype.handleInput = function (keypress) {
 	const maxY = 404;
 	if (keypress === 'up' && this.y > 0) {this.y -= stepY;}
 	if (keypress === 'down' && this.y < maxY) {this.y += stepY;}
-	if (keypress === 'right' && this.x < maxX) {this.x += stepX;}
+	if (keypress === 'right' && this.x < maxX) {this.x += stepX; }
 	if (keypress === 'left' && this.x > 0) {this.x -= stepX;}
 	if (this.y < 0) {
 		setTimeout(
@@ -67,10 +78,10 @@ Player.prototype.handleInput = function (keypress) {
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
 let allEnemies = [];
-const enemyInit = [65, 145, 225];
+const enemyInit = [72, 155, 238];
 
 enemyInit.forEach(function(location) {
-	enemy = new Enemy(0, location);
+	enemy = new Enemy(Math.floor(Math.random() * 10 ) -0, location, Math.floor(Math.random() * 100 ) + 300);
 	allEnemies.push(enemy);
 });
 
