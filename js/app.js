@@ -23,7 +23,6 @@ Enemy.prototype.update = function(dt) {
 		this.x = -95;
 		this.speed = Math.floor(Math.random() * 100 ) + 350;
 	}
-	
 	if ((player.y == this.y) && (player.x-51 < this.x) && (player.x+51 > this.x ))  {
 		player.x = 200;
 		player.y = 404;
