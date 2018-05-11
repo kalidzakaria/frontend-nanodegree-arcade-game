@@ -1,4 +1,5 @@
 // Enemies our player must avoid
+
 const Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -21,9 +22,10 @@ Enemy.prototype.update = function(dt) {
 	
 	if (this.x > 505) {
 		this.x = -95;
-		this.speed = Math.floor(Math.random() * 100 ) + 350;
+		this.speed = Math.floor(Math.random() * 100 ) + 250;
 	}
-	if ((player.y == this.y) && (player.x-51 < this.x) && (player.x+51 > this.x ))  {
+	//Detect collisoin and resets Player position
+	if ((player.y == this.y) && (player.x-75 < this.x) && (player.x+75 > this.x ))  {
 		player.x = 200;
 		player.y = 404;
 	}
@@ -44,7 +46,7 @@ const Player = function (x,y) {
 };
 
 Player.prototype.update = function (dt) {
-	
+
 };
 
 //Render the Player Character
@@ -54,20 +56,25 @@ Player.prototype.render = function() {
 
 //Handles player's key strokes (Up, Down, Right, Left)
 Player.prototype.handleInput = function (keypress) {
+	const win = document.querySelector("#win");
 	const stepX = 102;
 	const stepY = 83;
 	const maxX = 404;
 	const maxY = 404;
 	if (keypress === 'up' && this.y > 0) {this.y -= stepY;}
 	if (keypress === 'down' && this.y < maxY) {this.y += stepY;}
-	if (keypress === 'right' && this.x < maxX) {this.x += stepX; }
+	if (keypress === 'right' && this.x < maxX) {this.x += stepX;}
 	if (keypress === 'left' && this.x > 0) {this.x -= stepX;}
 	if (this.y < 0) {
+		win.style.display = "block";
+		win.classList.add("winner");
 		setTimeout(
 			function() {
+				win.style.display = "none";
+				win.classList.remove("winneranimation");
 				player.x = 200;
 				player.y = 404;
-			}, 1000);
+			}, 1100)
 	}
 };
 
@@ -76,20 +83,21 @@ Player.prototype.handleInput = function (keypress) {
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 // Place the player object in a variable called player
-let allEnemies = [];
-const enemyInit = [72, 155, 238];
+const allEnemies = [];
+const enemyLocation = [72, 155, 238];
 
-enemyInit.forEach(function(location) {
-	enemy = new Enemy(Math.floor(Math.random() * 10 ) -0, location, Math.floor(Math.random() * 100 ) + 300);
+//Initialize Enemy X-location and speed randomly
+enemyLocation.forEach(function(location) {
+	enemy = new Enemy(Math.floor(Math.random() * 50 ) -90, location, Math.floor(Math.random() * 100 ) + 250);
 	allEnemies.push(enemy);
 });
 
-let player = new Player(200, 404);
+const player = new Player(200, 404);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
 document.addEventListener('keyup', function(e) {
-    var allowedKeys = {
+    const allowedKeys = {
         37: 'left',
         38: 'up',
         39: 'right',
