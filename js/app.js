@@ -1,5 +1,11 @@
 // Enemies our player must avoid
-
+/**
+ * @description Enemies our player must avoid
+ * @constructor 
+ * @param {integer} x - position on X axis
+ * @param {integer} y - position on Y axis
+ * @param {integer} speed - Enemy speed
+ */
 const Enemy = function(x, y, speed) {
     // Variables applied to each of our instances go here,
     // we've provided one for you to get started
@@ -39,13 +45,24 @@ Enemy.prototype.render = function() {
 // Now write your own player class
 // This class requires an update(), render() and
 // a handleInput() method.
+/**
+ * @description represents the Player
+ * @constructor 
+ * @param {integer} x - position on X axis
+ * @param {integer} y - position on Y axis
+ */
 const Player = function (x,y) {
 	this.character = 'images/char-boy.png';
 	this.x = x;
 	this.y = y;
 };
 
+// Update the player's position, required method for game
+// Parameter: dt, a time delta between ticks
 Player.prototype.update = function (dt) {
+	// You should multiply any movement by the dt parameter
+    // which will ensure the game runs at the same speed for
+    // all computers.
 
 };
 
@@ -74,7 +91,7 @@ Player.prototype.handleInput = function (keypress) {
 				win.classList.remove("winneranimation");
 				player.x = 200;
 				player.y = 404;
-			}, 1100)
+			}, 1000)
 	}
 };
 
