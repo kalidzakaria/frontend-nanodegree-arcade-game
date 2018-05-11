@@ -30,12 +30,16 @@ Enemy.prototype.update = function(dt) {
 		this.x = -95;
 		this.speed = Math.floor(Math.random() * 100 ) + 250;
 	}
+	this.checkCollisions();
+};
+
+Enemy.prototype.checkCollisions = function () {
 	//Detect collisoin and resets Player position
 	if ((player.y == this.y) && (player.x-75 < this.x) && (player.x+75 > this.x ))  {
 		player.x = 200;
 		player.y = 404;
 	}
-};
+}
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
