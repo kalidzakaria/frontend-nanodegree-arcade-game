@@ -1,4 +1,4 @@
-'use strict'
+'use strict';
 // Enemies our player must avoid
 /**
  * @description Enemies our player must avoid
@@ -37,10 +37,9 @@ Enemy.prototype.update = function(dt) {
 Enemy.prototype.checkCollisions = function () {
 	//Detect collisoin and resets Player position
 	if ((player.y == this.y) && (player.x-75 < this.x) && (player.x+75 > this.x ))  {
-		player.x = 200;
-		player.y = 404;
+		player.reset();
 	}
-}
+};
 
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
@@ -76,6 +75,12 @@ Player.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.character), this.x, this.y);
 };
 
+//Reset the player to initial position
+Player.prototype.reset = function () {
+	this.x = 200;
+	this.y = 404;
+};
+
 //Handles player's key strokes (Up, Down, Right, Left)
 Player.prototype.handleInput = function (keypress) {
 	const massage = document.querySelector(".message");
@@ -91,12 +96,11 @@ Player.prototype.handleInput = function (keypress) {
 		massage.style.display = "block";
 		massage.classList.add("winner");
 		setTimeout(
-			function() {
+			() => {
 				massage.style.display = "none";
 				massage.classList.remove("winneranimation");
-				player.x = 200;
-				player.y = 404;
-			}, 1000)
+				this.reset();
+			}, 1000);
 	}
 };
 
