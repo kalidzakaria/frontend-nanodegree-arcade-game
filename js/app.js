@@ -1,3 +1,4 @@
+'use strict'
 // Enemies our player must avoid
 /**
  * @description Enemies our player must avoid
@@ -77,7 +78,7 @@ Player.prototype.render = function() {
 
 //Handles player's key strokes (Up, Down, Right, Left)
 Player.prototype.handleInput = function (keypress) {
-	const win = document.querySelector("#win");
+	const massage = document.querySelector(".message");
 	const stepX = 102;
 	const stepY = 83;
 	const maxX = 404;
@@ -87,12 +88,12 @@ Player.prototype.handleInput = function (keypress) {
 	if (keypress === 'right' && this.x < maxX) {this.x += stepX;}
 	if (keypress === 'left' && this.x > 0) {this.x -= stepX;}
 	if (this.y < 0) {
-		win.style.display = "block";
-		win.classList.add("winner");
+		massage.style.display = "block";
+		massage.classList.add("winner");
 		setTimeout(
 			function() {
-				win.style.display = "none";
-				win.classList.remove("winneranimation");
+				massage.style.display = "none";
+				massage.classList.remove("winneranimation");
 				player.x = 200;
 				player.y = 404;
 			}, 1000)
@@ -109,7 +110,7 @@ const enemyLocation = [72, 155, 238];
 
 //Initialize Enemy X-location and speed randomly
 enemyLocation.forEach(function(location) {
-	enemy = new Enemy(Math.floor(Math.random() * 50 ) -90, location, Math.floor(Math.random() * 100 ) + 250);
+	const enemy = new Enemy(Math.floor(Math.random() * 50 ) -90, location, Math.floor(Math.random() * 100 ) + 250);
 	allEnemies.push(enemy);
 });
 
