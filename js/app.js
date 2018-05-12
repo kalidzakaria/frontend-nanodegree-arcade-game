@@ -81,6 +81,12 @@ Player.prototype.reset = function () {
 	this.y = 404;
 };
 
+//Reset the player to initial position
+Player.prototype.reset = function () {
+	this.x = 200;
+	this.y = 404;
+}
+
 //Handles player's key strokes (Up, Down, Right, Left)
 Player.prototype.handleInput = function (keypress) {
 	const massage = document.querySelector(".message");
